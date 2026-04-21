@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-REPO_URL="https://github.com/lelackwarren-ui/Creation_Outil_Installation_Shell.git"
-SRC_DIR="$HOME/src/Creation_Outil_Installation_Shell"
+REPO_URL="https://github.com/lelackwarren-ui/fancy_tools.git"
+SRC_DIR="$HOME/src/fancy_tools"
 BASHRC="$HOME/.bashrc"
 
 # Fonction : ajoute une ligne si absente
