@@ -1,137 +1,143 @@
-# Creation_Outil_Installation_Shell
+# Fancy Tools
 
-# Fancy Tools — Projet Complet
+## Description du projet
 
-## Structure du projet
+Fancy Tools est un ensemble de scripts Bash permettant d'améliorer l'utilisation du terminal et de Git.
+
+Le projet automatise :
+
+* l'ajout d'alias utiles
+* des fonctions personnalisées Bash
+* l'installation rapide sur une nouvelle machine
+* la mise à jour automatique depuis GitHub
+
+Objectif : gagner du temps et standardiser un environnement de développement.
+
+---
+
+## Prérequis
+
+### Système d'exploitation
+
+* Linux
+* macOS
+* WSL (Windows Subsystem for Linux)
+
+### Outils nécessaires
+
+* Bash
+* Git
+* Connexion Internet
+* Terminal
+
+### Vérification
 
 ```bash
-fancy_tools/
-├── .aliases
-├── fancy_functions.sh
-├── install.sh
-├── bin/
-│   └── updateFancyTools
-└── README.md
+bash --version
+git --version
 ```
 
 ---
 
-## `.aliases`
+## Installation
+
+### 1. Cloner le dépôt
 
 ```bash
-alias gs='git status'
-alias ga='git add .'
-alias gc='git commit'
-alias ll='ls -la'
+git clone https://github.com/<votre_login>/fancy_tools.git
 ```
 
----
-
-## `fancy_functions.sh`
+### 2. Entrer dans le dossier
 
 ```bash
-gco() {
-    git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
-        echo "Erreur : ce répertoire n'est pas un dépôt Git."
-        return 1
-    }
-
-    [ -z "$1" ] && {
-        echo "Usage : gco 'message_du_commit'"
-        return 1
-    }
-
-    branch=$(git branch --show-current)
-    [ -z "$branch" ] && {
-        echo "Erreur : impossible de récupérer la branche."
-        return 1
-    }
-
-    git commit -m "[$branch] $*"
-}
+cd fancy_tools
 ```
 
----
-
-## `install.sh`
+### 3. Donner les permissions
 
 ```bash
-#!/bin/bash
-set -e
-
-REPO_URL="https://github.com/<votre_login>/fancy_tools.git"
-SRC_DIR="$HOME/src/fancy_tools"
-BASHRC="$HOME/.bashrc"
-
-add_if_missing() {
-    grep -qxF "$1" "$BASHRC" || echo "$1" >> "$BASHRC"
-}
-
-[ -f "$BASHRC" ] && cp "$BASHRC" "$HOME/.bashrc.bak.$(date +%Y%m%d_%H%M%S)"
-mkdir -p "$HOME/src"
-
-if [ ! -d "$SRC_DIR" ]; then
-    git clone "$REPO_URL" "$SRC_DIR"
-fi
-
-add_if_missing 'export PATH="$HOME/bin:$PATH"'
-add_if_missing "[ -f $SRC_DIR/.aliases ] && source $SRC_DIR/.aliases"
-add_if_missing "[ -f $SRC_DIR/fancy_functions.sh ] && source $SRC_DIR/fancy_functions.sh"
-
-echo "Installation terminée. Lance : source ~/.bashrc"
+chmod +x install.sh
+chmod +x bin/updateFancyTools
 ```
 
----
-
-## `bin/updateFancyTools`
+### 4. Lancer l'installation
 
 ```bash
-#!/bin/bash
-set -e
+./install.sh
+```
 
-SRC_DIR="$HOME/src/fancy_tools"
-BIN_DIR="$HOME/bin"
+### 5. Recharger Bash
 
-[ ! -d "$SRC_DIR" ] && {
-    echo "Fancy Tools non installé."
-    exit 1
-}
-
-cd "$SRC_DIR"
-branch=$(git branch --show-current)
-
-[ "$branch" != "main" ] && {
-    echo "Passez sur la branche main."
-    exit 1
-}
-
-git pull
-mkdir -p "$BIN_DIR"
-cp "$SRC_DIR/bin/updateFancyTools" "$BIN_DIR/updateFancyTools"
-chmod +x "$BIN_DIR/updateFancyTools"
-
-echo "Mise à jour terminée."
+```bash
+source ~/.bashrc
 ```
 
 ---
 
 ## Utilisation
 
+### Alias disponibles
+
 ```bash
-git clone https://github.com/<votre_login>/fancy_tools.git
-cd fancy_tools
-chmod +x install.sh
-./install.sh
-source ~/.bashrc
+gs    # git status
+ga    # git add .
+gc    # git commit
+ll    # ls -la
 ```
 
-### Commandes utiles
+---
+
+### Fonction personnalisée : gco
+
+Permet de commit automatiquement avec le nom de branche.
 
 ```bash
-gco "ajout fonctionnalité"
+gco "ajout page accueil"
+```
+
+Résultat :
+
+```bash
+git commit -m "[dev] ajout page accueil"
+```
+
+---
+
+### Mise à jour du projet
+
+```bash
 updateFancyTools
-gs
-ga
-gc
-ll
 ```
+
+Cette commande :
+
+* se place dans le dépôt
+* vérifie la branche main
+* effectue un git pull
+* met à jour le script dans ~/bin
+
+---
+
+## Structure du projet
+
+```bash
+fancy_tools/
+├── .aliases                # Alias Bash personnalisés
+├── fancy_functions.sh      # Fonctions shell avancées
+├── install.sh              # Installation automatique
+├── bin/
+│   └── updateFancyTools    # Script de mise à jour
+└── README.md               # Documentation
+```
+
+---
+
+## Auteur
+
+Projet réalisé par **<LELACK Warren Kenji>**
+
+---
+
+## Licence
+
+Projet pédagogique.
