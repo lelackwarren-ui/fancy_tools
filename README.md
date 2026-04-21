@@ -20,8 +20,7 @@ Objectif : gagner du temps et standardiser un environnement de développement.
 ### Système d'exploitation
 
 * Linux
-* macOS
-* WSL (Windows Subsystem for Linux)
+* WSL (Windows Subsystem for Linux, Machine virtuelle)
 
 ### Outils nécessaires
 
@@ -44,7 +43,7 @@ git --version
 ### 1. Cloner le dépôt
 
 ```bash
-git clone https://github.com/<votre_login>/fancy_tools.git
+git clone https://github.com/lelackwarren-ui/fancy_tools.git
 ```
 
 ### 2. Entrer dans le dossier
@@ -134,7 +133,7 @@ fancy_tools/
 
 ## Auteur
 
-Projet réalisé par **<LELACK Warren Kenji>**
+Projet réalisé par LELACK Warren Kenji
 
 ---
 
