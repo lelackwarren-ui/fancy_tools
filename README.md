@@ -78,8 +78,10 @@ source ~/.bashrc
 ### Alias disponibles
 
 ```bash
-gs    # git status
-ga    # git add .
+gss    # git status
+gpl    # git pull
+gpu    # git push
+gap    # git add .
 gc    # git commit
 ll    # ls -la
 ```
