@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+SRC_DIR="$HOME/src/fancy_tools"
+BIN_DIR="$HOME/bin"
+
+# Vérifier que le dossier existe
+if [ ! -d "$SRC_DIR" ]; then
+    echo "Erreur : fancy_tools n'est pas installé dans $SRC_DIR"
+    exit 1
+fi
+
+# Aller dans le dépôt
+cd "$SRC_DIR"
+
+# Vérifier la branche courante
+branch=$(git branch --show-current)
+
+if [ "$branch" != "main" ]; then
+    echo "Erreur : vous devez être sur la branche main."
+    echo "Branche actuelle : $branch"
+    exit 1
+fi
+
+# Mettre à jour depuis GitHub
+git pull
+
+# Créer ~/bin si absent
+mkdir -p "$BIN_DIR"
+
+# Copier le script dans ~/bin
+cp "$SRC_DIR/bin/updateFancyTools" "$BIN_DIR/updateFancyTools"
+
+# Donner les droits d'exécution
+chmod +x "$BIN_DIR/updateFancyTools"
+
+echo "Fancy Tools mis à jour avec succès."
