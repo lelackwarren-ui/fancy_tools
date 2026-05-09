@@ -130,6 +130,27 @@ fancy_tools/
 │   └── updateFancyTools    # Script de mise à jour
 └── README.md               # Documentation
 ```
+## Bonus 
+  Voici un petit bonus, ce bonus permet d'afficher la branche où vous vous situé dans votre projet git.
+```bash
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+git_status_color() {
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
+        if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+            echo -e "\033[1;31m"  # Rouge si modifications
+        else
+            echo -e "\033[1;36m"  # Vert si propre
+        fi
+    else
+        echo -e "\033[1;32m"
+    fi
+}
+
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(git_status_color)$(parse_git_branch)\[\033[00m\]\$ '
+```
 
 ---
 
